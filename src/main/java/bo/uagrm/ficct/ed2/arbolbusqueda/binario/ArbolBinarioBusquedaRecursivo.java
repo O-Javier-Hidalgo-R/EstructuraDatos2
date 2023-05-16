@@ -247,7 +247,7 @@ public class ArbolBinarioBusquedaRecursivo<K extends Comparable<K>, V>
         }
     }
 
-    private int nivelR(NodoBinario<K, V> nodoActual) {
+    protected int nivelR(NodoBinario<K, V> nodoActual) {
         if (!NodoBinario.esVacio(nodoActual)) {
             int izq = nivelR(nodoActual.getHijoIzquierdo()) + 1;
             int der = nivelR(nodoActual.getHijoDerecho()) + 1;
@@ -359,7 +359,7 @@ public class ArbolBinarioBusquedaRecursivo<K extends Comparable<K>, V>
         return nodoActual;
     }
     
-    private NodoBinario<K, V> nodoMenor(NodoBinario<K, V> raiz){
+    protected NodoBinario<K, V> nodoMenor(NodoBinario<K, V> raiz){
         if(raiz.esVacioHijoIzquierdo()){
             return raiz;
         }
