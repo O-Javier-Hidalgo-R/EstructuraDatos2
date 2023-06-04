@@ -12,12 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Clase que permite la implementacion de una estructura de datos basada en 
- * el tipo de dato abstracto de arbol binario de busqueda (usa solo 
- * instrucciones recursivas)
+ * Clase que permite implementar un arbol de busqueda binario generico usando 
+ * solo algoritmos recursivos.<br>
+ * Se les llama binario por que son arboles de busqueda con las siguientes 
+ * particularidades:<p>
+ * &nbsp;&nbsp;&nbsp;<b>a)</b> Todos los nodos solo pueden tener dos hijos uno 
+ * "derecho" y uno "izquierdo"<br>
+ * &nbsp;&nbsp;&nbsp;<b>b)</b> Todos los nodos a la izquierda de uno en 
+ * especifico deben de ser menores al mismo.<br>
+ * &nbsp;&nbsp;&nbsp;<b>c)</b> Todos los nodos a la derecha de uno en 
+ * especifico deben de ser mayores al mismo.<p>
+ * ejemplo:<p>
+ * <img src = "imagenes/arbolBinario1.png" style="width:600px" alt = "ejemplo de
+ * arbol binario"><p>
  * @author OJavierHR
- * @param <K> tipo de datos del que sera la clave de los nodos del arbol.
- * @param <V> tipo de datos del que sera el valor de los nodos del arbol.
+ * @param <K> Tipo de dato que llevaran los nodos del arbol como claves.
+ * @param <V> Tipo de dato que llevaran los nodos del arbol como valores.
  */
 public class ArbolBinarioBusquedaRecursivo<K extends Comparable<K>, V> 
         implements IArbolBusqueda<K, V>{
@@ -35,25 +45,99 @@ public class ArbolBinarioBusquedaRecursivo<K extends Comparable<K>, V>
     }
 
     /**
-     * Constructor por copia
+     * Constructor por copia.
      * @param raiz 
      */
     public ArbolBinarioBusquedaRecursivo(NodoBinario<K, V> raiz) {
         this.raiz = raiz;
     }
     
+    /**
+     * Constructor que inicializa los valores del arbol con los recorridos 
+     * previos de un arbol ya inicializado.<br>
+     * Para ello se necesitan de dos recorridos en profundidad, uno in-orden y 
+     * y uno pre o post orden.<p>
+     * En caso de reconstruir con pre-Orden el algoritmo es el siguiente:<br>
+     * &nbsp;&nbsp;&nbsp;<b>a)</b> Se inserta como el padre un nodo nuevo con 
+     * la clave y valor que esten primero en el recorrido in-orden.<br>
+     * &nbsp;&nbsp;&nbsp;<b>b)</b> Se asigna a la izquierda el sub arbol que 
+     * resultara de las sub-listas de las claves y valores de los sub-recorridos
+     * in-orden y preorden:<br>
+     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>*</b> Sub recorrido in-orden: 
+     * Desde inicio hasta un nodo antes del que se inserto como nodo padre en 
+     * el paso anterior.<br>
+     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>*</b> Sub recorrido pre-orden: 
+     * Desde el segundo elemento de la lista y que es del mismo tamaño que la 
+     * sublista in-orden.<br>
+     * &nbsp;&nbsp;&nbsp;<b>c)</b> Se asigna a la derecha el sub arbol que 
+     * resultara de las sub-listas de las claves y valores de los sub-recorridos
+     * in-orden y preorden:<br>
+     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>*</b> Sub recorrido in-orden: 
+     * Desde el nodo posterior al nodo padre insertado en el anterior paso "a)"
+     * el ultimo nodo.<br>
+     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>*</b> Sub recorrido pre-orden: 
+     * Desde el indice resultado del tamaño de la sublista usada para la parte 
+     * izquierda +1, hasta el final.<br>
+     * &nbsp;&nbsp;&nbsp;<b>d)</b> Repetir los anteriores pasos hasta que las 
+     * listas se vacien.<br>
+     * Un ejemplo grafico seria:<p>
+     * <img src = "imagenes/arbolBinario2.png" style="width:600px" alt = "
+       ejemplo de reconstruccion por recorrido pre-orden"><p>
+     * En caso de reconstruir con post-Orden el algoritmo es el siguiente:<br>
+     * &nbsp;&nbsp;&nbsp;<b>a)</b> Se inserta como el padre un nodo nuevo con 
+     * la clave y valor que esten ultimos en el recorrido post-orden.<br>
+     * &nbsp;&nbsp;&nbsp;<b>b)</b> Se asigna a la izquierda el sub arbol que 
+     * resultara de las sub-listas de las claves y valores de los sub-recorridos
+     * in-orden y preorden:<br>
+     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>*</b> Sub recorrido in-orden: 
+     * Desde inicio hasta un nodo antes del que se inserto como nodo padre en 
+     * el paso anterior.<br>
+     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>*</b> Sub recorrido pre-orden: 
+     * Desde el primer elemento de la lista y que es del mismo tamaño que la 
+     * sublista in-orden.<br>
+     * &nbsp;&nbsp;&nbsp;<b>c)</b> Se asigna a la derecha el sub arbol que 
+     * resultara de las sub-listas de las claves y valores de los sub-recorridos
+     * in-orden y preorden:<br>
+     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>*</b> Sub recorrido in-orden: 
+     * Desde el nodo posterior al nodo padre insertado en el anterior paso "a)"
+     * el ultimo nodo.<br>
+     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>*</b> Sub recorrido pre-orden: 
+     * Desde el indice resultado del tamaño de la sublista usada para la parte 
+     * izquierda, hasta el penultimo nodo.<br>
+     * &nbsp;&nbsp;&nbsp;<b>d)</b> Repetir los anteriores pasos hasta que las 
+     * listas se vacien.<br>
+     * Un ejemplo grafico seria:<p>
+     * <img src = "imagenes/arbolBinario3.png" style="width:600px" alt = "
+       ejemplo de reconstruccion por recorrido post-orden"><p>
+     * @param clavesInOrden Lista de claves in-orden.
+     * @param valoresInOrden Lista de valores in-orden.
+     * @param clavesNoInOrden Lista de valores pre-orden o post-Orden.
+     * @param valoresNoInOrden Lista de valores pre-orden o post-orden.
+     * @param usandoPreOrden Valor booleano que es true si se usa el recorrido 
+     * pre-orden para reconstruir o false si se usa el recorrido post-orden.
+     */
     public ArbolBinarioBusquedaRecursivo(List<K> clavesInOrden, 
             List<V> valoresInOrden, List<K> clavesNoInOrden, 
             List<V> valoresNoInOrden, boolean usandoPreOrden){
         if(usandoPreOrden){
-            setRaiz(reconstruirConPreOrden(clavesInOrden, valoresInOrden, 
-                    clavesNoInOrden, valoresNoInOrden));
+            this.raiz = reconstruirConPreOrden(clavesInOrden, valoresInOrden, 
+                    clavesNoInOrden, valoresNoInOrden);
         }else{
-            setRaiz(reconstruirConPostOrden(clavesInOrden, valoresInOrden, 
-                    clavesNoInOrden, valoresNoInOrden));
+            this.raiz = reconstruirConPostOrden(clavesInOrden, valoresInOrden, 
+                    clavesNoInOrden, valoresNoInOrden);
         }
     }
     
+    /**
+     * Operacion privada usada en el constructor que reconstruye el arbol con 
+     * los recorridos. Se encarga de la recontrucion en caso de hacerlo desde
+     * un recorrido pre-orden.
+     * @param clavesInOrden Lista con las claves in-orden.
+     * @param valoresInOrden Lista con los valores in-orden.
+     * @param clavesPreOrden Lista con las claves pre-orden.
+     * @param valoresPreOrden Lista con los valores pre-orden.
+     * @return Arbol binario reconstruido con el recorrido pre-preorden.
+     */
     private NodoBinario<K, V> reconstruirConPreOrden(List<K> clavesInOrden, 
             List<V> valoresInOrden, List<K> clavesPreOrden, 
             List<V> valoresPreOrden) {
@@ -62,25 +146,51 @@ public class ArbolBinarioBusquedaRecursivo<K extends Comparable<K>, V>
         }else{
             K clavePadre = clavesPreOrden.get(0);
             V valorPadre = valoresPreOrden.get(0);
-            int posicionClaveInOrden = posicionDeClave(clavePadre, clavesInOrden);
+            int posicionClaveInOrden = indiceDeClave(clavePadre, 
+                    clavesInOrden);
             //parte izquierda
-            List<K> clavesInOrdeIzq = clavesInOrden.subList(0, posicionClaveInOrden);
-            List<V> valoresInOrdeIzq = valoresInOrden.subList(0, posicionClaveInOrden);
-            List<K> clavesPreOrdeIzq = clavesPreOrden.subList(1, posicionClaveInOrden +1);
-            List<V> valoresPreOrdeIzq = valoresPreOrden.subList(1, posicionClaveInOrden +1);
+            List<K> clavesInOrdeIzq = clavesInOrden.subList(0, 
+                    posicionClaveInOrden);
+            List<V> valoresInOrdeIzq = valoresInOrden.subList(0, 
+                    posicionClaveInOrden);
+            List<K> clavesPreOrdeIzq = clavesPreOrden.subList(1, 
+                    posicionClaveInOrden +1);
+            List<V> valoresPreOrdeIzq = valoresPreOrden.subList(1, 
+                    posicionClaveInOrden +1);
             //parte derecha
-            List<K> clavesInOrdeDer = clavesInOrden.subList(posicionClaveInOrden +1, clavesInOrden.size());
-            List<V> valoresInOrdeDer = valoresInOrden.subList(posicionClaveInOrden +1, clavesInOrden.size());
-            List<K> clavesPreOrdeDer = clavesPreOrden.subList(posicionClaveInOrden +1, clavesInOrden.size());
-            List<V> valoresPreOrdeDer = valoresPreOrden.subList(posicionClaveInOrden +1, clavesInOrden.size());
+            List<K> clavesInOrdeDer = clavesInOrden.subList(
+                    posicionClaveInOrden +1, clavesInOrden.size());
+            List<V> valoresInOrdeDer = valoresInOrden.subList(
+                    posicionClaveInOrden +1, clavesInOrden.size());
+            List<K> clavesPreOrdeDer = clavesPreOrden.subList(
+                    posicionClaveInOrden +1, clavesInOrden.size());
+            List<V> valoresPreOrdeDer = valoresPreOrden.subList(
+                    posicionClaveInOrden +1, clavesInOrden.size());
             //armamos
-            NodoBinario<K, V> nodoPadre = new NodoBinario<>(clavePadre, valorPadre);
-            nodoPadre.setHijoIzquierdo(reconstruirConPreOrden(clavesInOrdeIzq, valoresInOrdeIzq, clavesPreOrdeIzq, valoresPreOrdeIzq));
-            nodoPadre.setHijoDerecho(reconstruirConPreOrden(clavesInOrdeDer, valoresInOrdeDer, clavesPreOrdeDer, valoresPreOrdeDer));
+            NodoBinario<K, V> nodoPadre = new NodoBinario<>(clavePadre, 
+                    valorPadre);
+            nodoPadre.setHijoIzquierdo(reconstruirConPreOrden(
+                    clavesInOrdeIzq, valoresInOrdeIzq, 
+                    clavesPreOrdeIzq, valoresPreOrdeIzq)
+            );
+            nodoPadre.setHijoDerecho(reconstruirConPreOrden(
+                    clavesInOrdeDer, valoresInOrdeDer, 
+                    clavesPreOrdeDer, valoresPreOrdeDer)
+            );
             return nodoPadre;
         }
     }
     
+    /**
+     * Operacion privada usada en el constructor que reconstruye el arbol con 
+     * los recorridos. Se encarga de la recontrucion en caso de hacerlo desde
+     * un recorrido post-orden.
+     * @param clavesInOrden Lista con las claves in-orden.
+     * @param valoresInOrden Lista con los valores in-orden.
+     * @param clavesPostOrden Lista con las claves post-orden.
+     * @param valoresPostOrden Lista con los valores post-orden.
+     * @return Arbol binario reconstruido con el recorrido pre-preorden.
+     */
     private NodoBinario<K, V> reconstruirConPostOrden(List<K> clavesInOrden, 
             List<V> valoresInOrden, List<K> clavesPostOrden, 
             List<V> valoresPostOrden) {
@@ -89,26 +199,51 @@ public class ArbolBinarioBusquedaRecursivo<K extends Comparable<K>, V>
         }else{
             K clavePadre = clavesPostOrden.get(clavesPostOrden.size()-1);
             V valorPadre = valoresPostOrden.get(valoresPostOrden.size()-1);
-            int posicionClaveInOrden = posicionDeClave(clavePadre, clavesInOrden);
+            int posicionClaveInOrden = indiceDeClave(clavePadre, 
+                    clavesInOrden);
             //parte izquierda
-            List<K> clavesInOrdeIzq = clavesInOrden.subList(0, posicionClaveInOrden);
-            List<V> valoresInOrdeIzq = valoresInOrden.subList(0, posicionClaveInOrden);
-            List<K> clavesPostOrdeIzq = clavesPostOrden.subList(0, posicionClaveInOrden);
-            List<V> valoresPostOrdenIzq = valoresPostOrden.subList(0, posicionClaveInOrden);
+            List<K> clavesInOrdeIzq = clavesInOrden.subList(0, 
+                    posicionClaveInOrden);
+            List<V> valoresInOrdeIzq = valoresInOrden.subList(0, 
+                    posicionClaveInOrden);
+            List<K> clavesPostOrdeIzq = clavesPostOrden.subList(0, 
+                    posicionClaveInOrden);
+            List<V> valoresPostOrdenIzq = valoresPostOrden.subList(0, 
+                    posicionClaveInOrden);
             //parte derecha
-            List<K> clavesInOrdeDer = clavesInOrden.subList(posicionClaveInOrden +1, clavesInOrden.size());
-            List<V> valoresInOrdeDer = valoresInOrden.subList(posicionClaveInOrden +1, clavesInOrden.size());
-            List<K> clavesPostOrdenDer = clavesPostOrden.subList(posicionClaveInOrden, clavesInOrden.size()-1);
-            List<V> valoresPostOrdenDer = valoresPostOrden.subList(posicionClaveInOrden, clavesInOrden.size()-1);
+            List<K> clavesInOrdeDer = clavesInOrden.subList(
+                    posicionClaveInOrden +1, clavesInOrden.size());
+            List<V> valoresInOrdeDer = valoresInOrden.subList(
+                    posicionClaveInOrden +1, clavesInOrden.size());
+            List<K> clavesPostOrdenDer = clavesPostOrden.subList(
+                    posicionClaveInOrden, clavesInOrden.size()-1);
+            List<V> valoresPostOrdenDer = valoresPostOrden.subList(
+                    posicionClaveInOrden, clavesInOrden.size()-1);
             //armamos
-            NodoBinario<K, V> nodoPadre = new NodoBinario<>(clavePadre, valorPadre);
-            nodoPadre.setHijoIzquierdo(reconstruirConPostOrden(clavesInOrdeIzq, valoresInOrdeIzq, clavesPostOrdeIzq, valoresPostOrdenIzq));
-            nodoPadre.setHijoDerecho(reconstruirConPostOrden(clavesInOrdeDer, valoresInOrdeDer, clavesPostOrdenDer, valoresPostOrdenDer));
+            NodoBinario<K, V> nodoPadre = new NodoBinario<>(clavePadre, 
+                    valorPadre);
+            nodoPadre.setHijoIzquierdo(reconstruirConPostOrden(
+                    clavesInOrdeIzq, valoresInOrdeIzq, 
+                    clavesPostOrdeIzq, 
+                    valoresPostOrdenIzq));
+            nodoPadre.setHijoDerecho(reconstruirConPostOrden(
+                    clavesInOrdeDer, valoresInOrdeDer, 
+                    clavesPostOrdenDer, 
+                    valoresPostOrdenDer));
             return nodoPadre;
         }
     }
     
-    private int posicionDeClave(K claveABuscar, List<K> listaDeClaves){
+    /**
+     * Operacion privada usada en el constructor que reconstruye el arbol con 
+     * los recorridos. Se encarga de señalar el indice de una clave dentro de
+     * una lista, en caso de no encontrar dicha clave se retorna el valor 
+     * invalido de -1.
+     * @param claveABuscar Valor de la clave a buscar en la lista.
+     * @param listaDeClaves Lista con las claves en la que se quiere buscar.
+     * @return Indice en el que se encontro la clave, -1 si no se encontro.
+     */
+    private int indiceDeClave(K claveABuscar, List<K> listaDeClaves){
         for (int i = 0; i < listaDeClaves.size(); i++) {
             K claveActual = listaDeClaves.get(i);
             if(claveActual.compareTo(claveABuscar) == 0){
@@ -120,22 +255,22 @@ public class ArbolBinarioBusquedaRecursivo<K extends Comparable<K>, V>
     
     /**
      * Retorna la raiz del arbol.
-     * @return raiz
+     * @return Muestra la raiz (nodo inicial del arbol).
      */
     public NodoBinario<K, V> getRaiz() {
         return raiz;
     }
 
     /**
-     * Ingresa un valor a la raiz de la clase.
-     * @param raiz
+     * Ingresa un valor a la raiz del arbol.
+     * @param raiz valor a insertar como raiz del arbol.
      */
     public void setRaiz(NodoBinario<K, V> raiz) {
         this.raiz = raiz;
     }
     
     /**
-     * Elimina la raiz (vacia todo el arbol).
+     * Vacia el arbol, elimina todos los valores dentro del arbol.
      */
     @Override
     public void vaciar() {
@@ -144,7 +279,7 @@ public class ArbolBinarioBusquedaRecursivo<K extends Comparable<K>, V>
 
     /**
      * Verifica si el arbol esta vacio.
-     * @return True si el arbol esta vacio
+     * @return True si el arbol esta vacio.
      */
     @Override
     public boolean esVacio() {
@@ -329,14 +464,18 @@ public class ArbolBinarioBusquedaRecursivo<K extends Comparable<K>, V>
      * @throws IllegalArgumentException 
      */
     @Override
-    public void eliminar(K clave) {
-        setRaiz(eliminarR(getRaiz(), clave));
+    public V eliminar(K clave) {
+        V valorEliminado = null;
+        setRaiz(eliminarR(getRaiz(), clave, valorEliminado));
+        return valorEliminado;
     }
 
-    private NodoBinario<K, V> eliminarR(NodoBinario<K, V> nodoActual, K clave) {
+    private NodoBinario<K, V> eliminarR(NodoBinario<K, V> nodoActual, K clave, 
+            V valorEliminado) {
         if (NodoBinario.esVacio(nodoActual)) {
             return nodoActual;
         } else if (clave.compareTo(nodoActual.getClave()) == 0) {
+            valorEliminado = nodoActual.getValor();
             if (nodoActual.esIncompleto()) {
                 if (clave.compareTo(nodoActual.getClave()) < 0) {
                     return nodoActual.getHijoIzquierdo();
@@ -347,13 +486,13 @@ public class ArbolBinarioBusquedaRecursivo<K extends Comparable<K>, V>
                 NodoBinario<K, V> nodoRemplazo = nodoMenor(nodoActual.getHijoDerecho());
                 nodoActual.setClave(nodoRemplazo.getClave());
                 nodoActual.setValor(nodoRemplazo.getValor());
-                nodoActual.setHijoDerecho(eliminarR(nodoActual.getHijoDerecho(), nodoRemplazo.getClave()));
+                nodoActual.setHijoDerecho(eliminarR(nodoActual.getHijoIzquierdo(), clave, valorEliminado));
             }
         } else {
             if (clave.compareTo(nodoActual.getClave()) < 0) {
-                nodoActual.setHijoIzquierdo(eliminarR(nodoActual.getHijoIzquierdo(), clave));
+                nodoActual.setHijoIzquierdo(eliminarR(nodoActual.getHijoIzquierdo(), clave, valorEliminado));
             } else {
-                nodoActual.setHijoDerecho(eliminarR(nodoActual.getHijoDerecho(), clave));
+                nodoActual.setHijoDerecho(eliminarR(nodoActual.getHijoDerecho(), clave, valorEliminado));
             }
         }
         return nodoActual;

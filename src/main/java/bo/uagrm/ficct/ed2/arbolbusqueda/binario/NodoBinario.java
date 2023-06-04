@@ -5,31 +5,54 @@
 package bo.uagrm.ficct.ed2.arbolbusqueda.binario;
 
 /**
- * Clase que se usa para implementar un nodo binario usado en arboles binarios 
- * de busqueda
+ * Clase que se usa para implementar un nodo binario usado en arboles binarios
+ * de busqueda y avl.<br>
+ * Graficamente puede representarse de esta manera:
+ * <p>
+ * <img src = "imagenes/nodoBinario1.png" style="width:300px" alt = "
+ * reresentacion grafica del nodo binario"><p>
  * @author OJavierHR
- * @param <K> Atributo para la clave
- * @param <V> Atributo para el valor
+ * @param <K> Atributo comparable para la clave.
+ * @param <V> Atributo para el valor.
  */
-public class NodoBinario<K extends Comparable<K>, V>{
-    
+public class NodoBinario<K extends Comparable<K>, V> {
+
+    /**
+     * Identificador comparable del nodo que se usara a al hora de buscar un
+     * nodo especifico en el arbol.
+     */
     private K clave;
+
+    /**
+     * Valor o valores que se almacenaran en el nodo para su uso posterior.
+     */
     private V valor;
+
+    /**
+     * Referencia del nodo al hijo derecho del actual, la clave tiene que ser
+     * mayor que el actual.
+     */
     private NodoBinario hijoDerecho;
+
+    /**
+     * Referencia del nodo al hijo izquierdo del actual, la clave tiene que ser
+     * menor que el actual.
+     */
     private NodoBinario hijoIzquierdo;
 
     /**
-     * Constructor vacio de la clase
+     * Constructor vacio de la clase.
      */
     public NodoBinario() {
-    
+
     }
-    
+
     /**
      * Constructor por copia de la clase
-     * @param copiando Nodo binario del que se copian los valores
+     *
+     * @param copiando Nodo binario del que se copian los valores.
      */
-    public NodoBinario(NodoBinario<K, V> copiando){
+    public NodoBinario(NodoBinario<K, V> copiando) {
         this.clave = copiando.getClave();
         this.valor = copiando.getValor();
         this.hijoDerecho = copiando.getHijoDerecho();
@@ -37,9 +60,10 @@ public class NodoBinario<K extends Comparable<K>, V>{
     }
 
     /**
-     * Constructor parametrizado
-     * @param clave Valor de la clave 
-     * @param valor Valor del "valor" de la clave
+     * Constructor parametrizado (las referencias a los hijos comienzan vacias).
+     *
+     * @param clave Clave del nodo a crearse.
+     * @param valor Valor del nodo a crearse.
      */
     public NodoBinario(K clave, V valor) {
         this.clave = clave;
@@ -48,124 +72,139 @@ public class NodoBinario<K extends Comparable<K>, V>{
 
     /**
      * Muestra el valor de la clave del nodo.
-     * @return clave
+     *
+     * @return clave Clave a mostrar.
      */
     public K getClave() {
         return clave;
     }
 
     /**
-     * Permite cambiar el valor de la clave del nodo
-     * @param clave 
+     * Cambiar el valor de la clave del nodo.
+     *
+     * @param clave Clave a insertar.
      */
     public void setClave(K clave) {
         this.clave = clave;
     }
 
     /**
-     * Muestra el valor del "valor" del nodo
-     * @return valor
+     * Muestra el valor del atributo valor del nodo.
+     *
+     * @return Valor Valor a mostrar.
      */
     public V getValor() {
         return valor;
     }
 
     /**
-     * Permite cambiar el valor de la clave del valor
-     * @param valor 
+     * Cambiar el valor del atributo valor del nodo.
+     *
+     * @param valor Valor a insertar en el nodo.
      */
     public void setValor(V valor) {
         this.valor = valor;
     }
 
     /**
-     * Muestra el hijo derecho del nodo
-     * @return 
+     * Muestra el hijo derecho del nodo.
+     *
+     * @return Hijo derecho a mostrar.
      */
     public NodoBinario<K, V> getHijoDerecho() {
         return hijoDerecho;
     }
 
     /**
-     * Permite cambiar el valor del hijo derecho del nodo
-     * @param hijoDerecho 
+     * Cambiar el valor del hijo derecho del nodo.
+     *
+     * @param hijoDerecho Hijo derecho a insertar.
      */
     public void setHijoDerecho(NodoBinario hijoDerecho) {
         this.hijoDerecho = hijoDerecho;
     }
 
     /**
-     * Muestra el hijo izquierdo del nodo
-     * @return 
+     * Muestra el hijo izquierdo del nodo.
+     *
+     * @return Hijo izquierdo a mostrar.
      */
     public NodoBinario<K, V> getHijoIzquierdo() {
         return hijoIzquierdo;
     }
 
     /**
-     * Permite cambiar el valor del hijo izquierdo del nodo.
-     * @param hijoIzquierdo 
+     * Cambiar el valor del hijo izquierdo del nodo.
+     *
+     * @param hijoIzquierdo Hijo izquierdo a insertar.
      */
     public void setHijoIzquierdo(NodoBinario hijoIzquierdo) {
         this.hijoIzquierdo = hijoIzquierdo;
     }
-    
+
     /**
-     * Valida si el hijo izquierdo esta vacio
-     * @return 
+     * Valida si el hijo izquierdo esta vacio.
+     *
+     * @return True si el hijo izquierdo esta vacio.
      */
-    public boolean esVacioHijoIzquierdo(){
+    public boolean esVacioHijoIzquierdo() {
         return esVacio(hijoIzquierdo);
     }
-    
+
     /**
-     * Valida si el hijo derecho esta vacio
-     * @return 
+     * Valida si el hijo derecho esta vacio.
+     *
+     * @return True si el hijo derecho esta vacio
      */
-    public boolean esVacioHijoDerecho(){
+    public boolean esVacioHijoDerecho() {
         return esVacio(hijoDerecho);
     }
-    
+
     /**
-     * Valida si el nodo no tiene hijo
-     * @return 
+     * Valida si el nodo no tiene hijos.
+     *
+     * @return True si el nodo es hoja.
      */
-    public boolean esHoja(){
+    public boolean esHoja() {
         return esVacioHijoDerecho() && esVacioHijoIzquierdo();
     }
-    
+
     /**
      * Valida si el nodo es incompleto (no tiene hijos o solo tiene uno)
-     * @return 
+     *
+     * @return True si el nodo es incompleto.
      */
-    public boolean esIncompleto(){
-        return !(!esVacioHijoDerecho() && !esVacioHijoIzquierdo());
+    public boolean esIncompleto() {
+        return esVacioHijoDerecho() || esVacioHijoIzquierdo();
     }
-    
+
     /**
-     * Muestra una representacion de la clase mediante un string
-     * @return 
+     * Muestra una representacion de la clase mediante un string.
+     *
+     * @return String con la representacion del nodo.
      */
     @Override
     public String toString() {
         return "(" + clave + ", " + valor + ')';
     }
-    
+
     /**
-     * Funcion compartida de la clase nodo que valida si el nodo pasado por 
-     * parametros esta vacio.
-     * @param nodo
-     * @return 
+     * Funcion compartida que valida si el nodo pasado por parametros esta
+     * vacio.
+     *
+     * @param nodo Nodo binario a validar como vacio.
+     * @return True si el nodo esta vacio.
      */
-    public static boolean esVacio(NodoBinario nodo){
+    public static boolean esVacio(NodoBinario nodo) {
         return nodo == null;
     }
-    
+
     /**
-     * Funcion compartida de la clase nodo que retorna un nodo nulo.
-     * @return 
+     * Funcion compartida de la clase nodo que retorna un nodo vacio.
+     *
+     * @return Nodo con valores vacios.
      */
-    public static NodoBinario<?, ?> nodoVacio(){
+    public static NodoBinario<?, ?> nodoVacio() {
         return null;
-    } 
+    }
 }

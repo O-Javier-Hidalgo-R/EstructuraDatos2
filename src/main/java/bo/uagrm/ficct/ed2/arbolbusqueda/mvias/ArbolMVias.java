@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package bo.uagrm.ficct.ed2.arbolbusqueda.binario;
+package bo.uagrm.ficct.ed2.arbolbusqueda.mvias;
 
 import bo.uagrm.ficct.ed2.arbolbusqueda.IArbolBusqueda;
 import java.util.ArrayList;
@@ -121,8 +121,10 @@ public class ArbolMVias<K extends Comparable<K>, V>
     }
 
     @Override
-    public void eliminar(K clave) throws IllegalArgumentException {
-        this.raiz = eliminar(raiz, clave);
+    public V eliminar(K clave) throws IllegalArgumentException {
+        V valorAEliminar = (V) NodoNVias.datoVacio();
+        this.raiz = eliminar(raiz, clave, valorAEliminar);
+        return valorAEliminar;
     }
 
     @Override
@@ -132,7 +134,7 @@ public class ArbolMVias<K extends Comparable<K>, V>
 
     @Override
     public int altura() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return nivel()+1;
     }
 
     @Override
@@ -187,10 +189,11 @@ public class ArbolMVias<K extends Comparable<K>, V>
         return result;
     }
 
-    private NodoNVias<K, V> eliminar(NodoNVias<K, V> nodoActual, K claveAEliminar) {
+    private NodoNVias<K, V> eliminar(NodoNVias<K, V> nodoActual, K claveAEliminar, V valorAEliminar) {
         for (int i = 0; i < nodoActual.cantidadDeClavesNoVacias(); i++) {
             K claveActual = nodoActual.getClave(i);
             if(claveAEliminar.compareTo(claveActual) == 0){
+                valorAEliminar = nodoActual.getValor(i);
                 if(nodoActual.esHoja()){
                     this.eliminarDatosNodo(nodoActual, i);
                     if(nodoActual.cantidadDeClavesNoVacias() == 0){
@@ -206,13 +209,13 @@ public class ArbolMVias<K extends Comparable<K>, V>
                     claveDeRemplazo = this.buscarClavePredecesoraInOrden(nodoActual, i);
                 }
                 V valorDeRemplazo = this.buscar(claveDeRemplazo);
-                nodoActual = eliminar(nodoActual, claveDeRemplazo);
+                nodoActual = eliminar(nodoActual, claveDeRemplazo, valorAEliminar);
                 nodoActual.setClave(i, claveDeRemplazo);
                 nodoActual.setValor(i, valorDeRemplazo);
                 return nodoActual;
             }
             if(claveAEliminar.compareTo(claveActual)<0){
-                NodoNVias<K, V> supuestoNuevoHijo = this.eliminar(nodoActual.getHijo(i), claveAEliminar);
+                NodoNVias<K, V> supuestoNuevoHijo = this.eliminar(nodoActual.getHijo(i), claveAEliminar, valorAEliminar);
                 nodoActual.setHijo(i, supuestoNuevoHijo);
                 return nodoActual;
             }

@@ -7,23 +7,135 @@ package bo.uagrm.ficct.ed2.arbolbusqueda;
 import java.util.List;
 
 /**
- * Interfaz que implementa el comportamiento comun entre los arboles
+ * Interfaz usada para implementar el comportamiento regular o comun de un arbol
+ * de busqueda, se usa dos variables genericas para indicar los valores y claves
+ * que se alamacenaran en la estructura (binario, avl, mvias, b)
+ * .<p>
+ * Siendo un arbol de busqueda una estructura de datos que es:<br>
+ * &nbsp;&nbsp;&nbsp;<b>a) Jerarquica.-</b> Los componentes (en este caso nodos)
+ * estan a distinto nivel, razon por la cual tambien se dice que no son lineales
+ * al no estar uno sucesivo del otro.<br>
+ * &nbsp;&nbsp;&nbsp;<b>b) Organizada.-</b> El contenido esta dispuesto
+ * siguiendo algun criterio de orden.<br>
+ * &nbsp;&nbsp;&nbsp;<b>c) Dinamica.-</b> El tamaño y contenido de los datos
+ * pueden cambian durante la ejecucion.<p>
+ * ejemplos:
+ * <p>
+ * &nbsp;&nbsp;&nbsp;<b>Arbol de busqueda binario</b><p>
+ * <img src = "imagenes/arbolBinario1.png" style="width:200px" alt = "ejemplo de
+ * arbol binario"><p>
+ * &nbsp;&nbsp;&nbsp;<b>Arbol de busqueda nVias</b><p>
+ * <img src = "imagenes/arbolNVias1.png" style="width:200px" alt = "ejemplo de
+ * arbol n-Vias"><p>
  * @author OJavierHR
- * @param <K> Atributo usado para implementar la clave de los nodos 
- * @param <V> Atributo usado para implementar el valor de la clave
+ * @param <K> Atributo generico que implementa la interfaz "Comparable", usado
+ * para implementar las claves (Keys) de los nodos, que se usan como
+ * identificador de cada nodo.
+ * @param <V> Atributo generico usado para implementar el valor o valores
+ * (Values) de los datos que se implementaran en el nodo.
  */
 public interface IArbolBusqueda<K extends Comparable<K>, V> {
+
+    /**
+     * Operacion que elimina todos los datos en el arbol de busqueda.
+     */
     void vaciar();
+
+    /**
+     * Valida si el arbol esta vacio.
+     *
+     * @return True si el arbol esta vacio.
+     */
     boolean esVacio();
-    void insertar(K clave, V valor);
-    V buscar(K clave);
-    boolean contiene(K clave);
+
+    /**
+     * Inserta un nodo nuevo al arbol con una clave y valor ingresado por
+     * parametros. Si la clave ya existe en algun nodo remplaza el valor del
+     * mismo por el especificado.
+     *
+     * @param claveAInsertar Clave del nodo a insertar.
+     * @param valorAInsertar Valor del nodo a insertar.
+     */
+    void insertar(K claveAInsertar, V valorAInsertar);
+
+    /**
+     * Retorna el valor del nodo con la clave especificada.
+     *
+     * @param claveABuscar Clave a buscar en el arbol.
+     * @return Valor del nodo buscado mediante la clave.
+     */
+    V buscar(K claveABuscar);
+
+    /**
+     * Verifica si existe un nodo con la clave especificada.
+     *
+     * @param claveAValidar Clave a validar en el arbol.
+     * @return True si existe el nodo con la clave ingresada.
+     */
+    boolean contiene(K claveAValidar);
+
+    /**
+     * Retorna una lista con las claves de los nodos recorriendo el arbol
+     * mediante sus niveles.
+     *
+     * @return List con las claves del recorrido.
+     */
     List<K> recorridoPorNiveles();
+
+    /**
+     * Retorna una lista con las claves de los nodos recorriendo el arbol en
+     * pre-orden.
+     *
+     * @return List con las claves del recorrido.
+     */
     List<K> recorridoPreOrden();
+
+    /**
+     * Retorna una lista con las claves de los nodos recorriendo el arbol en
+     * in-orden.
+     *
+     * @return List con las claves del recorrido.
+     */
     List<K> recorridoInOrden();
+
+    /**
+     * Retorna una lista con las claves de los nodos recorriendo el arbol en
+     * post-orden.
+     *
+     * @return List con las claves del recorrido.
+     */
     List<K> recorridoPostOrden();
-    void eliminar(K clave) throws IllegalArgumentException;
+
+    /**
+     * Elimina el nodo con la clave especificada y retorna el valor.
+     *
+     * @param claveAEliminar
+     * @return Valor del nodo eliminado.
+     * @throws IllegalArgumentException Exepcion en tiempo de ejecucion que se
+     * invoca cuando la clave a eliminar no existe en el arbol.
+     */
+    V eliminar(K claveAEliminar) throws IllegalArgumentException;
+
+    /**
+     * Retorna la cantidad de nodos no nulos en el arbol.
+     *
+     * @return Cantidad de nodos no nulos.
+     */
     int size();
+
+    /**
+     * Retorna la cantidad de generaciones a partir de la raiz que existen en el
+     * arbol.
+     *
+     * @return Altura del arbol.
+     */
     int altura();
+
+    /**
+     * Retorna la cantidad de generaciones a partir de la primera que existen en
+     * el arbol.
+     *
+     * @return Niveles del arbol.
+     */
     int nivel();
 }

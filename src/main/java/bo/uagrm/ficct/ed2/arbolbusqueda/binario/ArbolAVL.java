@@ -38,13 +38,16 @@ public class ArbolAVL<K extends Comparable<K>, V> extends ArbolBinarioBusquedaRe
     }
     
     @Override
-    public void eliminar(K clave) {
-        setRaiz(eliminar(getRaiz(), clave));
+    public V eliminar(K clave) {
+        NodoBinario<K, V> nodoEliminado = new NodoBinario<>();
+        setRaiz(eliminar(getRaiz(), clave, nodoEliminado));
+        return nodoEliminado.getValor();
     }
     
-    private NodoBinario<K, V> eliminar(NodoBinario<K, V> nodoActual, K clave) {
+    private NodoBinario<K, V> eliminar(NodoBinario<K, V> nodoActual, K clave, NodoBinario<K, V> nodoEliminado) {
         if (!NodoBinario.esVacio(nodoActual)) {
             if (clave.compareTo(nodoActual.getClave()) == 0) {
+                nodoEliminado = nodoActual;
                 if (nodoActual.esIncompleto()) {
                     if (!nodoActual.esVacioHijoIzquierdo()) {
                         return nodoActual.getHijoIzquierdo();
@@ -55,12 +58,12 @@ public class ArbolAVL<K extends Comparable<K>, V> extends ArbolBinarioBusquedaRe
                     NodoBinario<K, V> nodoRemplazo = nodoMenor(nodoActual.getHijoDerecho());
                     nodoActual.setClave(nodoRemplazo.getClave());
                     nodoActual.setValor(nodoRemplazo.getValor());
-                    nodoActual.setHijoDerecho(eliminar(nodoActual.getHijoDerecho(), nodoRemplazo.getClave()));
+                    nodoActual.setHijoDerecho(eliminar(nodoActual.getHijoDerecho(), nodoRemplazo.getClave(), nodoEliminado));
                 }
             } else if (clave.compareTo(nodoActual.getClave()) < 0) {
-                nodoActual.setHijoIzquierdo(eliminar(nodoActual.getHijoIzquierdo(), clave));
+                nodoActual.setHijoIzquierdo(eliminar(nodoActual.getHijoIzquierdo(), clave, nodoEliminado));
             } else {
-                nodoActual.setHijoDerecho(eliminar(nodoActual.getHijoDerecho(), clave));
+                nodoActual.setHijoDerecho(eliminar(nodoActual.getHijoDerecho(), clave, nodoEliminado));
             }
         }
         return balancear(nodoActual);
