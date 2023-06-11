@@ -67,33 +67,17 @@ public class ArbolBinarioBusquedaIterativo<K extends Comparable<K>, V>
     public void setRaiz(NodoBinario<K, V> raiz) {
         this.raiz = raiz;
     }
-
-    /**
-     * Elimina la raiz (vacia todo el arbol).
-     */
+    
     @Override
     public void vaciar() {
         setRaiz((NodoBinario<K, V>) NodoBinario.nodoVacio());
     }
-
-    /**
-     * Verifica si el arbol esta vacio.
-     *
-     * @return True si el arbol esta vacio
-     */
+    
     @Override
     public boolean esVacio() {
         return NodoBinario.esVacio(raiz);
     }
-
-    /**
-     * Inserta un nuevo nodo (por sus parametros) en el lugar que le corresponda
-     * en funcion de la clave, en caso de ya estar en el arbol la clave
-     * sobreescribe el valor del nodo.
-     *
-     * @param claveAInsertar del nodo a insertar
-     * @param valorAInsertar del nodo a insertar
-     */
+    
     @Override
     public void insertar(K claveAInsertar, V valorAInsertar) {
         //si el arbol es vacio la raiz es el nodo a insertar
@@ -124,14 +108,7 @@ public class ArbolBinarioBusquedaIterativo<K extends Comparable<K>, V>
             }
         }
     }
-
-    /**
-     * Funcion que retorna el valor de un nodo buscado por valor de la clave,
-     * retorna null si no existe.
-     *
-     * @param claveABuscar se usa para buscar en el arbol
-     * @return valor que se encuentre en el nodo a buscar
-     */
+    
     @Override
     public V buscar(K claveABuscar) {
         //el nodo actual de la busqueda comienza en la raiz
@@ -150,24 +127,12 @@ public class ArbolBinarioBusquedaIterativo<K extends Comparable<K>, V>
         //retornamos nulo si no encontramos la clave a buscar
         return null;
     }
-
-    /**
-     * Verifica si en el arbol existe un nodo con la clave especificada por
-     * parametros.
-     *
-     * @param ClaveAVerificar se verifica si existe en el arbol.
-     * @return True si la clave ya existe en el arbol.
-     */
+    
     @Override
     public boolean contiene(K ClaveAVerificar) {
         return buscar(ClaveAVerificar) != null;
     }
-
-    /**
-     * Retorna una lista con las claves al recorrer por nivel el arbol.
-     *
-     * @return lista con el recorrido por niveles.
-     */
+    
     @Override
     public List<K> recorridoPorNiveles() {
         List<K> recorrido = new ArrayList<>();
@@ -210,13 +175,7 @@ public class ArbolBinarioBusquedaIterativo<K extends Comparable<K>, V>
         }
         return recorrido;
     }
-
-    /**
-     * Retorna el recorrido que resulta del desplazamiento por los nodos
-     * siguiendo un recorrido preorden.
-     *
-     * @return lista con el recorrido en preorden
-     */
+    
     @Override
     public List<K> recorridoPreOrden() {
         // si es vacio retorna nulo
@@ -247,13 +206,7 @@ public class ArbolBinarioBusquedaIterativo<K extends Comparable<K>, V>
         }
         return recorrido;
     }
-
-    /**
-     * Retorna el recorrido que resulta del desplazamiento por los nodos en
-     * inorden.
-     *
-     * @return lista con el recorrido inorden
-     */
+    
     @Override
     public List<K> recorridoInOrden() {
         List<K> recorrido = new ArrayList<>();
@@ -283,13 +236,7 @@ public class ArbolBinarioBusquedaIterativo<K extends Comparable<K>, V>
 
         return recorrido;
     }
-
-    /**
-     * Retorna le recorrido resultado de un recorrido en post orden por el 
-     * arbol.
-     * 
-     * @return recorrido posorden
-     */
+    
     @Override
     public List<K> recorridoPostOrden() {
         List<K> recorrido = new ArrayList<>();
@@ -315,14 +262,7 @@ public class ArbolBinarioBusquedaIterativo<K extends Comparable<K>, V>
         }
         return recorrido;
     }
-
-    /**
-     * Elimina el nodo con la clave especificada por parametros.
-     *
-     * @param claveAEliminar
-     * @return
-     * @throws IllegalArgumentException
-     */
+    
     @Override
     public V eliminar(K claveAEliminar) throws IllegalArgumentException {
         NodoBinario<K, V> nodoEliminando = getRaiz();
@@ -392,12 +332,7 @@ public class ArbolBinarioBusquedaIterativo<K extends Comparable<K>, V>
         }
         return valorAEliminar;
     }
-
-    /**
-     * Retorna la cantidad de nodos no vacios en el arbol
-     *
-     * @return cantidad de nodos
-     */
+    
     @Override
     public int size() {
         int contador = 0;
@@ -425,12 +360,6 @@ public class ArbolBinarioBusquedaIterativo<K extends Comparable<K>, V>
         return contador;
     }
 
-    /**
-     * Muestra la altura del arbol, que es conteo de niveles del arbol
-     * comenzando desde 1
-     *
-     * @return altura del arbol
-     */
     @Override
     public int altura() {
         int alt = 0;
@@ -457,13 +386,7 @@ public class ArbolBinarioBusquedaIterativo<K extends Comparable<K>, V>
         }
         return alt;
     }
-
-    /**
-     * Muestra el nivel del arbol, que es el conteo de los niveles comenzando
-     * desde 0
-     *
-     * @return
-     */
+    
     @Override
     public int nivel() {
         return altura() - 1;

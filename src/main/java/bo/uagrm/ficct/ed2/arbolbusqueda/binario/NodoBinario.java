@@ -6,20 +6,19 @@ package bo.uagrm.ficct.ed2.arbolbusqueda.binario;
 
 /**
  * Clase que se usa para implementar un nodo binario usado en arboles binarios
- * de busqueda y avl.<br>
- * Graficamente puede representarse de esta manera:
- * <p>
+ * de busqueda y avl. <br>
+ * Graficamente puede representarse de esta manera: <p>
  * <img src = "imagenes/nodoBinario1.png" style="width:300px" alt = "
- * reresentacion grafica del nodo binario"><p>
+   reresentacion grafica del nodo binario">
+ * 
  * @author OJavierHR
- * @param <K> Atributo comparable para la clave.
- * @param <V> Atributo para el valor.
+ * @param <K> Tipo de dato (comparable) para la clave.
+ * @param <V> Tipo de dato para el valor.
  */
 public class NodoBinario<K extends Comparable<K>, V> {
 
     /**
-     * Identificador comparable del nodo que se usara a al hora de buscar un
-     * nodo especifico en el arbol.
+     * Identificador del nodo que se usara como criterio de busqueda.
      */
     private K clave;
 
@@ -50,13 +49,13 @@ public class NodoBinario<K extends Comparable<K>, V> {
     /**
      * Constructor por copia de la clase
      *
-     * @param copiando Nodo binario del que se copian los valores.
+     * @param nodoACopiar Nodo binario del que se copian los valores.
      */
-    public NodoBinario(NodoBinario<K, V> copiando) {
-        this.clave = copiando.getClave();
-        this.valor = copiando.getValor();
-        this.hijoDerecho = copiando.getHijoDerecho();
-        this.hijoIzquierdo = copiando.getHijoIzquierdo();
+    public NodoBinario(NodoBinario<K, V> nodoACopiar) {
+        this.clave = nodoACopiar.getClave();
+        this.valor = nodoACopiar.getValor();
+        this.hijoDerecho = nodoACopiar.getHijoDerecho();
+        this.hijoIzquierdo = nodoACopiar.getHijoIzquierdo();
     }
 
     /**
@@ -91,7 +90,7 @@ public class NodoBinario<K extends Comparable<K>, V> {
     /**
      * Muestra el valor del atributo valor del nodo.
      *
-     * @return Valor Valor a mostrar.
+     * @return Valor a mostrar.
      */
     public V getValor() {
         return valor;
@@ -109,7 +108,7 @@ public class NodoBinario<K extends Comparable<K>, V> {
     /**
      * Muestra el hijo derecho del nodo.
      *
-     * @return Hijo derecho a mostrar.
+     * @return Valor del hijo derecho.
      */
     public NodoBinario<K, V> getHijoDerecho() {
         return hijoDerecho;
@@ -118,7 +117,7 @@ public class NodoBinario<K extends Comparable<K>, V> {
     /**
      * Cambiar el valor del hijo derecho del nodo.
      *
-     * @param hijoDerecho Hijo derecho a insertar.
+     * @param hijoDerecho Valor a insertar en el hijo derecho.
      */
     public void setHijoDerecho(NodoBinario hijoDerecho) {
         this.hijoDerecho = hijoDerecho;
@@ -127,7 +126,7 @@ public class NodoBinario<K extends Comparable<K>, V> {
     /**
      * Muestra el hijo izquierdo del nodo.
      *
-     * @return Hijo izquierdo a mostrar.
+     * @return Valor del hijo izquierdo.
      */
     public NodoBinario<K, V> getHijoIzquierdo() {
         return hijoIzquierdo;
@@ -136,7 +135,7 @@ public class NodoBinario<K extends Comparable<K>, V> {
     /**
      * Cambiar el valor del hijo izquierdo del nodo.
      *
-     * @param hijoIzquierdo Hijo izquierdo a insertar.
+     * @param hijoIzquierdo Valor a insertar del hijo izquierdo.
      */
     public void setHijoIzquierdo(NodoBinario hijoIzquierdo) {
         this.hijoIzquierdo = hijoIzquierdo;

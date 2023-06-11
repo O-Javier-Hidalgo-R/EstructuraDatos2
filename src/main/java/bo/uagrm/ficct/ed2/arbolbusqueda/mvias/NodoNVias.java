@@ -105,4 +105,15 @@ public class NodoNVias<K, V>{
         }
         return cantNoVacias;
     }
+    
+    public NodoNVias<K, V> generarNodoTemporal(){
+        NodoNVias<K, V> result = new NodoNVias<>(this.listaDeHijos.size() + 1);
+        for (int i = 0; i < this.cantidadDeClavesNoVacias(); i++) {
+            result.listaDeClaves.set(i, 
+                    this.listaDeClaves.get(i));
+            result.listaDeValores.set(i, 
+                    this.listaDeValores.get(i));
+        }
+        return result;
+    }
 }

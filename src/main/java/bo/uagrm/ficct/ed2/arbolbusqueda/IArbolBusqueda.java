@@ -9,8 +9,7 @@ import java.util.List;
 /**
  * Interfaz usada para implementar el comportamiento regular o comun de un arbol
  * de busqueda, se usa dos variables genericas para indicar los valores y claves
- * que se alamacenaran en la estructura (binario, avl, mvias, b)
- * .<p>
+ * que se almacenaran en la estructura (binario, avl, mvias, b). <br>
  * Siendo un arbol de busqueda una estructura de datos que es:<br>
  * &nbsp;&nbsp;&nbsp;<b>a) Jerarquica.-</b> Los componentes (en este caso nodos)
  * estan a distinto nivel, razon por la cual tambien se dice que no son lineales
@@ -18,15 +17,15 @@ import java.util.List;
  * &nbsp;&nbsp;&nbsp;<b>b) Organizada.-</b> El contenido esta dispuesto
  * siguiendo algun criterio de orden.<br>
  * &nbsp;&nbsp;&nbsp;<b>c) Dinamica.-</b> El tamaño y contenido de los datos
- * pueden cambian durante la ejecucion.<p>
- * ejemplos:
- * <p>
+ * pueden cambian durante la ejecucion.<br>
+ * ejemplos:<p>
  * &nbsp;&nbsp;&nbsp;<b>Arbol de busqueda binario</b><p>
- * <img src = "imagenes/arbolBinario1.png" style="width:200px" alt = "ejemplo de
- * arbol binario"><p>
+ * <img src = "imagenes/arbolBusquedaBinario1.png" style="width:400px" alt = "ejemplo de
+   arbol binario"><p>
  * &nbsp;&nbsp;&nbsp;<b>Arbol de busqueda nVias</b><p>
- * <img src = "imagenes/arbolNVias1.png" style="width:200px" alt = "ejemplo de
- * arbol n-Vias"><p>
+ * <img src = "imagenes/arbolBusquedaNVias1.png" style="width:400px" alt = "ejemplo de
+   arbol n-Vias">
+ * 
  * @author OJavierHR
  * @param <K> Atributo generico que implementa la interfaz "Comparable", usado
  * para implementar las claves (Keys) de los nodos, que se usan como
@@ -109,31 +108,31 @@ public interface IArbolBusqueda<K extends Comparable<K>, V> {
     /**
      * Elimina el nodo con la clave especificada y retorna el valor.
      *
-     * @param claveAEliminar
+     * @param claveAEliminar Clave que se quiere eliminar del arbol de busqueda
      * @return Valor del nodo eliminado.
-     * @throws IllegalArgumentException Exepcion en tiempo de ejecucion que se
+     * @throws IllegalArgumentException Excepcion en tiempo de ejecucion que se
      * invoca cuando la clave a eliminar no existe en el arbol.
      */
     V eliminar(K claveAEliminar) throws IllegalArgumentException;
 
     /**
-     * Retorna la cantidad de nodos no nulos en el arbol.
+     * Retorna la cantidad de claves en el arbol.
      *
      * @return Cantidad de nodos no nulos.
      */
     int size();
 
     /**
-     * Retorna la cantidad de generaciones a partir de la raiz que existen en el
-     * arbol.
+     * Retorna la cantidad de generaciones en el arbol a partir de la raiz y 
+     * contando desde uno.
      *
      * @return Altura del arbol.
      */
     int altura();
 
     /**
-     * Retorna la cantidad de generaciones a partir de la primera que existen en
-     * el arbol.
+     * Retorna la cantidad de generaciones en el arbol a partir de la raiz y 
+     * contando desde cero.
      *
      * @return Niveles del arbol.
      */

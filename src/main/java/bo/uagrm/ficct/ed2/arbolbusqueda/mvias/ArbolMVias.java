@@ -142,7 +142,7 @@ public class ArbolMVias<K extends Comparable<K>, V>
         return nivel(raiz);
     }
 
-    private NodoNVias<K, V> colocarDatoOrdenadamente(NodoNVias<K, V> nodoActual, K clave, V valor) {
+    protected NodoNVias<K, V> colocarDatoOrdenadamente(NodoNVias<K, V> nodoActual, K clave, V valor) {
         int i;
         int pos;
         
@@ -171,7 +171,7 @@ public class ArbolMVias<K extends Comparable<K>, V>
         }
     }
 
-    private int busPosBajar(NodoNVias<K, V> nodoActual, K clave) {
+    protected int busPosBajar(NodoNVias<K, V> nodoActual, K clave) {
         int i = 0;
         while(i < nodoActual.cantidadDeClavesNoVacias()){
             if(clave.compareTo(nodoActual.getClave(i)) < 0){
